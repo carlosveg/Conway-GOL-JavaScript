@@ -9,6 +9,16 @@ class GOL {
     this.intervalId = 1;
     this.generations = 0;
     this.population = 0;
+    this.adjacentCells = [
+      [0, 1],
+      [1, 0],
+      [-1, 0],
+      [1, -1],
+      [-1, 1],
+      [0, -1],
+      [1, 1],
+      [-1, -1],
+    ];
 
     this.grid = [];
     for (let i = 0; i < rows; i++) {
@@ -62,13 +72,26 @@ class GOL {
   getNeighbors(row, col) {
     let neighbors = [];
 
-    for (let i = row - 1; i <= row + 1; i++) {
+    /**
+     * * Mundo con bordes muertos
+     */
+    /* for (let i = row - 1; i <= row + 1; i++) {
       for (let j = col - 1; j <= col + 1; j++) {
         if (i === row && j === col) continue;
         if (this.grid[i] && this.grid[i][j]) {
           neighbors.push(this.grid[i][j]);
         }
       }
+    } */
+
+    /**
+     * * Mundo toroidal
+     */
+    for (const pair of this.adjacentCells) {
+      const xCoord = (row + pair[0] + this.rows) % this.rows;
+      const yCoord = (col + pair[1] + this.rows) % this.rows;
+
+      neighbors.push(this.grid[xCoord][yCoord]);
     }
 
     return neighbors;

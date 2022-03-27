@@ -17,7 +17,7 @@ function resetSimulation(pixelSize, roundDelay, initialChanceOfLife = 0.005) {
 
   /* let canvasWidth = window.innerWidth * 0.78;
   let canvasHeight = window.innerHeight * 0.99; */
-  const canvasSize = 80;
+  const canvasSize = 800;
   let cols = canvasSize / pixelSize;
   let rows = canvasSize / pixelSize;
 
