@@ -1,35 +1,6 @@
 let CURRENT_SIM = null;
 let preset = null;
 
-window.onload = function () {
-  let data = [];
-  let updateInterval = 50;
-  let chart = new CanvasJS.Chart("chart", {
-    title: {
-      text: "Valores X vs. Valores Y",
-    },
-    axisX: {
-      title: "Valores X",
-    },
-    axisY: {
-      title: "Valores Y",
-    },
-    data: [{ type: "line", dataPoints: data }],
-  });
-  updateChart();
-  function updateChart() {
-    data.push({
-      x: CURRENT_SIM.getGenerations(),
-      y: CURRENT_SIM.getPopulation(),
-    });
-
-    chart.render();
-  }
-  setInterval(function () {
-    updateChart();
-  }, updateInterval);
-};
-
 document.addEventListener("DOMContentLoaded", function () {
   let pixelSize = 8;
   let roundDelay = 20;
@@ -44,9 +15,6 @@ function resetSimulation(pixelSize, roundDelay, initialChanceOfLife = 0.005) {
 
   if (previousCanvas) containerCanvas.removeChild(previousCanvas);
 
-  /**
-   * TODO: Hacer que el mundo sea de dimensiones cuadradas
-   */
   /* let canvasWidth = window.innerWidth * 0.78;
   let canvasHeight = window.innerHeight * 0.99; */
   const canvasSize = 80;

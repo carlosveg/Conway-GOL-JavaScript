@@ -39,31 +39,7 @@ class GOL {
     this.registerMouseListeners();
 
     /* Para la gráfica */
-    this.data = [];
-    /* this.chart = new CanvasJS.Chart("chart", {
-      title: {
-        text: "Valores X vs. Valores Y",
-      },
-      axisX: {
-        title: "Valores X",
-      },
-      axisY: {
-        title: "Valores Y",
-      },
-      data: [{ type: "line", dataPoints: this.data }],
-    }); */
   } // fin del constructor
-
-  crearGrafica() {}
-
-  updateChart() {
-    this.data.push({
-      x: CURRENT_SIM.getGenerations(),
-      y: CURRENT_SIM.getPopulation(),
-    });
-    this.chart.render();
-    console.log(this.data);
-  }
 
   start() {
     if (this.intervalId) {
@@ -71,7 +47,6 @@ class GOL {
     }
 
     this.intervalId = setInterval(() => {
-      //this.updateChart();
       this.advanceRound();
       this.repaint();
     }, this.interRoundDelay);
@@ -86,6 +61,7 @@ class GOL {
 
   getNeighbors(row, col) {
     let neighbors = [];
+
     for (let i = row - 1; i <= row + 1; i++) {
       for (let j = col - 1; j <= col + 1; j++) {
         if (i === row && j === col) continue;
@@ -194,7 +170,7 @@ class GOL {
     });
 
     if (preset !== 0 || preset !== null) {
-      console.log("chinga tu madre");
+      console.log("cargando preset");
       const centerX = Math.floor(this.cols / 2);
       const centerY = Math.floor(this.rows / 2);
       presets[preset].forEach((pair) => {
