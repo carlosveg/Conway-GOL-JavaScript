@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let pixelSize = 8;
   let roundDelay = 20;
 
-  resetSimulation(pixelSize, roundDelay, 0.05);
+  resetSimulation(pixelSize, roundDelay, 0.5);
   setupEventListeners(roundDelay);
 });
 
@@ -80,7 +80,7 @@ function setupEventListeners(initialRoundDelay) {
   document
     .querySelector("#reset-life-button")
     .addEventListener("click", (e) => {
-      let chanceOfLife = parseFloat(0);
+      let chanceOfLife = 0.05;
       CURRENT_SIM.resetLife("empty", chanceOfLife);
     });
 

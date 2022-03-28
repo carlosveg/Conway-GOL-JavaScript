@@ -10,14 +10,14 @@ class GOL {
     this.generations = 0;
     this.population = 0;
     this.adjacentCells = [
-      [0, 1],
-      [1, 0],
-      [-1, 0],
-      [1, -1],
-      [-1, 1],
-      [0, -1],
-      [1, 1],
       [-1, -1],
+      [0, -1],
+      [1, -1],
+      [-1, 0],
+      [1, 0],
+      [-1, 1],
+      [0, 1],
+      [1, 1],
     ];
 
     this.grid = [];
@@ -49,7 +49,29 @@ class GOL {
     this.registerMouseListeners();
 
     /* Para la gráfica */
+    this.dataset = anychart.data.set([]);
+
+    // set chart type
+    var chart = anychart.line();
+
+    chart.title().text("Click on Chart to Add a Point ");
+
+    // set data
+    chart.spline(this.dataset).markers(null);
+
+    // disable stagger mode. Only one line for x axis labels
+    chart.xAxis().staggerMode(false);
+
+    // set container and draw chart
+    chart.container("chart").draw();
   } // fin del constructor
+
+  updateChart() {
+    this.dataset.append({
+      x: this.getGenerations(),
+      value: this.getPopulation(),
+    });
+  }
 
   start() {
     if (this.intervalId) {
@@ -59,6 +81,7 @@ class GOL {
     this.intervalId = setInterval(() => {
       this.advanceRound();
       this.repaint();
+      this.updateChart();
     }, this.interRoundDelay);
   }
 
@@ -75,24 +98,24 @@ class GOL {
     /**
      * * Mundo con bordes muertos
      */
-    /* for (let i = row - 1; i <= row + 1; i++) {
+    for (let i = row - 1; i <= row + 1; i++) {
       for (let j = col - 1; j <= col + 1; j++) {
         if (i === row && j === col) continue;
         if (this.grid[i] && this.grid[i][j]) {
           neighbors.push(this.grid[i][j]);
         }
       }
-    } */
+    }
 
     /**
      * * Mundo toroidal
      */
-    for (const pair of this.adjacentCells) {
+    /* for (const pair of this.adjacentCells) {
       const xCoord = (row + pair[0] + this.rows) % this.rows;
       const yCoord = (col + pair[1] + this.rows) % this.rows;
 
       neighbors.push(this.grid[xCoord][yCoord]);
-    }
+    } */
 
     return neighbors;
   }
@@ -192,7 +215,7 @@ class GOL {
       });
     });
 
-    if (preset !== 0 || preset !== null) {
+    if (preset !== 0 || preset !== null || preset !== "empty") {
       console.log("cargando preset");
       const centerX = Math.floor(this.cols / 2);
       const centerY = Math.floor(this.rows / 2);
