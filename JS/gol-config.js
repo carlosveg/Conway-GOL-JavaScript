@@ -1,8 +1,11 @@
+import GOL from "./gol.js";
+import { presets } from "./presets.js";
+
 let CURRENT_SIM = null;
 let preset = null;
 
 document.addEventListener("DOMContentLoaded", function () {
-  let pixelSize = 8;
+  let pixelSize = 2;
   let roundDelay = 20;
 
   resetSimulation(pixelSize, roundDelay, 0.5);

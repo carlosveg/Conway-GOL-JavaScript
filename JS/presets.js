@@ -1,4 +1,4 @@
-const presets = {
+export const presets = {
   empty: [],
   acorn: [
     [-2, -1],
