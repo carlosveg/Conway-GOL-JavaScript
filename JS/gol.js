@@ -1,5 +1,7 @@
 import bindMultipleEventListener from "./utilities.js";
 import Cell from "./Cell.js";
+import { presets } from "./presets.js";
+import { Chart } from "./chartConfig.js";
 
 export default class GOL {
   constructor(rows, cols, pixelSize, interRoundDelay, initialChanceOfLife) {
@@ -52,30 +54,9 @@ export default class GOL {
 
     this.registerMouseListeners();
 
-    /* Para la gráfica */
-    this.dataset = anychart.data.set([]);
-
-    // set chart type
-    var chart = anychart.line();
-
-    chart.title().text("Click on Chart to Add a Point ");
-
-    // set data
-    chart.spline(this.dataset).markers(null);
-
-    // disable stagger mode. Only one line for x axis labels
-    chart.xAxis().staggerMode(false);
-
-    // set container and draw chart
-    chart.container("chart").draw();
+    // Para la gráfica
+    this.chart = new Chart();
   } // fin del constructor
-
-  updateChart() {
-    this.dataset.append({
-      x: this.getGenerations(),
-      value: this.getPopulation(),
-    });
-  }
 
   start() {
     if (this.intervalId) {
@@ -85,7 +66,7 @@ export default class GOL {
     this.intervalId = setInterval(() => {
       this.advanceRound();
       this.repaint();
-      this.updateChart();
+      this.chart.updateChart(this.getGenerations(), this.getPopulation());
     }, this.interRoundDelay);
   }
 
