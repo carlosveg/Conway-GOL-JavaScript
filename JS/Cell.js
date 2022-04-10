@@ -1,8 +1,8 @@
 export default class Cell {
   constructor(alive) {
     this.alive = alive;
-    this.lifeStyle = "#000000";
-    this.deathStyle = "#fff";
+    this.lifeColor = "#000000";
+    this.deathColor = "#ffffff";
     this.underpopulation = 2;
     this.overpopulation = 3;
 
@@ -43,7 +43,23 @@ export default class Cell {
     this.alive = !this.alive;
   }
 
+  getLifeStyle() {
+    return this.lifeColor;
+  }
+
+  setLifeStyle(color) {
+    this.lifeColor = color;
+  }
+
+  getDeathStyle() {
+    return this.deathColor;
+  }
+
+  setDeathStyle(color) {
+    this.deathColor = color;
+  }
+
   setPaintStyles(canvasCtx) {
-    canvasCtx.fillStyle = this.alive ? this.lifeStyle : this.deathStyle;
+    canvasCtx.fillStyle = this.alive ? this.lifeColor : this.deathColor;
   }
 }

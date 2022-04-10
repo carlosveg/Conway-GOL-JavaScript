@@ -33,19 +33,18 @@
           <div id="yPos"></div>
         </label>
         <div id="number-group">
-          <label for="frame-rate"
-            >Delay (ms):
+          <label>
+            Delay (ms):
             <input
               id="frame-rate"
-              name="frame-rate"
               type="range"
               value="20"
               min="0"
               max="50"
               step="10"
           /></label>
-          <label
-            >Presets:
+          <label>
+            Presets:
             <select id="presets"></select
           ></label>
         </div>
@@ -53,6 +52,16 @@
         <button id="pause-play-button">Pause/Play</button>
         <button id="reset-life-button">Reset game</button>
         <button id="next-generation">Next Generation</button>
+
+        <div>
+          <input type="color" id="deathStyle" name="head" value="#ffffff" />
+          <label for="deathStyle">Célula muerta</label>
+        </div>
+        <div>
+          <input type="color" id="lifeStyle" name="head" value="#000000" />
+          <label for="lifeStyle">Célula viva</label>
+        </div>
+        <button id="btnColors">Cambiar colores</button>
 
         <!-- Chart -->
         <div id="chart"></div>

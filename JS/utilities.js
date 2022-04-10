@@ -1,6 +1,6 @@
-export default function bindMultipleEventListener(element, eventNames, f) {
+export function bindMultipleEventListener(element, eventNames, callback) {
   eventNames.forEach((eventName) => {
-    element.addEventListener(eventName, f);
+    element.addEventListener(eventName, callback);
   });
 }
 

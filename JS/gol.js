@@ -1,7 +1,7 @@
-import bindMultipleEventListener from "./utilities.js";
 import Cell from "./Cell.js";
 import { presets } from "./presets.js";
 import { Chart } from "./chartConfig.js";
+import { bindMultipleEventListener } from "./utilities.js";
 
 export default class GOL {
   constructor(rows, cols, pixelSize, interRoundDelay, initialChanceOfLife) {
@@ -154,7 +154,7 @@ export default class GOL {
           continue; // No se repinta si no cambió su estado
         }
 
-        let color = pixel.alive ? pixel.lifeStyle : pixel.deathStyle;
+        let color = pixel.alive ? pixel.getLifeStyle() : pixel.getDeathStyle();
         if (byColor[color] === undefined) {
           byColor[color] = [];
         }
@@ -168,12 +168,13 @@ export default class GOL {
       this.canvasCtx.fillStyle = color;
 
       for (let [row, col] of byColor[color]) {
-        this.canvasCtx.fillRect(
+        /* this.canvasCtx.fillRect(
           col * this.pixelSize,
           row * this.pixelSize,
           this.pixelSize,
           this.pixelSize
-        );
+        ); */
+        this.paintPixel(row, col);
       }
     }
   }
@@ -210,6 +211,16 @@ export default class GOL {
     }
 
     this.repaint();
+  }
+
+  setPixelColors(lifeStyle, deathStyle) {
+    this.grid.forEach((row) => {
+      row.forEach((pixel) => {
+        pixel.setLifeStyle(lifeStyle);
+        pixel.setDeathStyle(deathStyle);
+        pixel.forceRepaint = true;
+      });
+    });
   }
 
   registerMouseListeners() {

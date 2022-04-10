@@ -93,4 +93,13 @@ function setupEventListeners(initialRoundDelay) {
     CURRENT_SIM.interRoundDelay = Math.floor(Math.pow(e.target.value, 1.3));
     CURRENT_SIM.start();
   });
+
+  document.querySelector("#btnColors").addEventListener("click", (e) => {
+    const newLifeColor = document.querySelector("#lifeStyle").value;
+    const newDeathColor = document.querySelector("#deathStyle").value;
+
+    CURRENT_SIM.stop();
+    CURRENT_SIM.setPixelColors(newLifeColor, newDeathColor);
+    CURRENT_SIM.start();
+  });
 }
