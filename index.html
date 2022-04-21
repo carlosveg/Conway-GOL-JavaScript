@@ -14,8 +14,66 @@
   </head>
   <body>
     <div id="container">
-      <div id="canvas"></div>
+      <div
+        id="canvas"
+        style="max-height: 800px; max-width: 800px; overflow: scroll"
+      ></div>
+
       <div id="info-controls">
+        <div id="number-group">
+          <div>
+            <label for="underpopulation">Death by Loneliness:</label>
+            <input
+              id="underpopulation"
+              name="underpopulation"
+              type="number"
+              min="0"
+              max="9"
+            />
+          </div>
+          <div>
+            <label for="overpopulation">Death by Crowding:</label>
+            <input
+              id="overpopulation"
+              name="overpopulation"
+              type="number"
+              min="0"
+              max="9"
+            />
+          </div>
+          <div>
+            <label for="reproduction-min">Parents Required:</label>
+            <input
+              id="reproduction-min"
+              name="reproduction-min"
+              type="number"
+              min="0"
+              max="9"
+            />
+          </div>
+          <div>
+            <label for="reproduction-max">Max Parents Allowed:</label>
+            <input
+              id="reproduction-max"
+              name="reproduction-max"
+              type="number"
+              min="0"
+              max="9"
+            />
+          </div>
+          <div>
+            <label for="percent-life-reset">Percent Life:</label>
+            <input
+              id="percent-life-reset"
+              name="percent-life-reset"
+              type="number"
+              value="0"
+              min="0"
+              max="1"
+              step="0.001"
+            />
+          </div>
+        </div>
         <label>
           Generaciones:
           <div id="generations"></div>
@@ -48,6 +106,7 @@
             <select id="presets"></select
           ></label>
         </div>
+        <button id="update-rules-button">Update Rules</button>
         <button id="load-preset-button">Cargar preset</button>
         <button id="pause-play-button">Pause/Play</button>
         <button id="reset-life-button">Reset game</button>

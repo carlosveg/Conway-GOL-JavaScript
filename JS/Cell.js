@@ -3,8 +3,10 @@ export default class Cell {
     this.alive = alive;
     this.lifeColor = "#000000";
     this.deathColor = "#ffffff";
-    this.underpopulation = 2;
-    this.overpopulation = 3;
+    this.underPopulation = 2;
+    this.overPopulation = 3;
+    this.reproductionMin = 3;
+    this.reproductionMax = 3;
 
     this.neighbors = [];
     this.nextState = null;
@@ -22,11 +24,16 @@ export default class Cell {
     }
 
     /* Reglas */
-    if (nextState && sum < this.underpopulation) {
+    if (
+      nextState &&
+      (sum < this.underPopulation || sum > this.overPopulation)
+    ) {
       nextState = false;
-    } else if (nextState && sum > this.overpopulation) {
-      nextState = false;
-    } else if (!nextState && sum == this.overpopulation) {
+    } else if (
+      !nextState &&
+      sum >= this.reproductionMin &&
+      sum <= this.reproductionMax
+    ) {
       nextState = true;
     }
 

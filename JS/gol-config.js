@@ -5,22 +5,24 @@ let CURRENT_SIM = null;
 let preset = null;
 
 document.addEventListener("DOMContentLoaded", function () {
-  let pixelSize = 4;
   let roundDelay = 20;
+  let pixelSize = 4;
+  let rules = [2, 3, 3, 3];
 
   resetSimulation(pixelSize, roundDelay, 0.5);
   setupEventListeners(roundDelay);
   loadPresets();
 });
 
-function resetSimulation(pixelSize, roundDelay, initialChanceOfLife = 0.005) {
+function resetSimulation(pixelSize, roundDelay, initialChanceOfLife = 0.05) {
   let containerCanvas = document.getElementById("canvas");
   let previousCanvas = containerCanvas.querySelector("canvas");
 
   if (previousCanvas) containerCanvas.removeChild(previousCanvas);
 
-  /* let canvasWidth = window.innerWidth * 0.78;
-  let canvasHeight = window.innerHeight * 0.99; */
+  /**
+   * ! Con canvasSize = 2000 hace las generaciones cada segundo
+   */
   const canvasSize = 800;
   let cols = canvasSize / pixelSize;
   let rows = canvasSize / pixelSize;
@@ -63,6 +65,19 @@ function setupEventListeners(initialRoundDelay) {
   document.querySelector("#presets").addEventListener("change", (e) => {
     preset = e.target.value;
   });
+
+  document
+    .querySelector("#update-rules-button")
+    .addEventListener("click", (e) => {
+      let rules = [
+        parseInt(rulesForm.querySelector("#underpopulation").value, 10),
+        parseInt(rulesForm.querySelector("#overpopulation").value, 10),
+        parseInt(rulesForm.querySelector("#reproduction-min").value, 10),
+        parseInt(rulesForm.querySelector("#reproduction-max").value, 10),
+      ];
+
+      CURRENT_SIM.setRules(...rules);
+    });
 
   document
     .querySelector("#load-preset-button")

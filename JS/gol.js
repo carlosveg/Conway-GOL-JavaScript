@@ -189,6 +189,24 @@ export default class GOL {
     );
   }
 
+  /**
+   * * Change the rules to each cell in grid
+   * @param {number} underPopulation
+   * @param {number} overPopulation
+   * @param {number} reproductionMin
+   * @param {number} reproductionMax
+   */
+  setRules(underPopulation, overPopulation, reproductionMin, reproductionMax) {
+    this.grid.forEach((row) => {
+      row.forEach((cell) => {
+        cell.underPopulation = underPopulation;
+        cell.overPopulation = overPopulation;
+        cell.reproductionMin = reproductionMin;
+        cell.reproductionMax = reproductionMax;
+      });
+    });
+  }
+
   resetLife(preset = "empty", chanceOfLife = 0.005) {
     this.generations = 0;
 
