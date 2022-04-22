@@ -22,7 +22,27 @@
       <div id="info-controls">
         <div id="number-group">
           <div>
-            <label for="underpopulation">Death by Loneliness:</label>
+            <label for="canvasSize">Tamaño del canvas:</label>
+            <input
+              id="canvasSize"
+              name="canvasSize"
+              type="number"
+              min="400"
+              max="1500"
+            />
+          </div>
+          <div>
+            <label for="cellSize">Tamaño de célula:</label>
+            <input
+              id="cellSize"
+              name="cellSize"
+              type="number"
+              min="0"
+              max="9"
+            />
+          </div>
+          <div>
+            <label for="underpopulation">Muerte por soledad (S_min):</label>
             <input
               id="underpopulation"
               name="underpopulation"
@@ -32,7 +52,9 @@
             />
           </div>
           <div>
-            <label for="overpopulation">Death by Crowding:</label>
+            <label for="overpopulation"
+              >Muerte por sobrepoblación (S_max):</label
+            >
             <input
               id="overpopulation"
               name="overpopulation"
@@ -42,7 +64,9 @@
             />
           </div>
           <div>
-            <label for="reproduction-min">Parents Required:</label>
+            <label for="reproduction-min"
+              >Vecinos mínimos requeridos (B_min):</label
+            >
             <input
               id="reproduction-min"
               name="reproduction-min"
@@ -52,7 +76,9 @@
             />
           </div>
           <div>
-            <label for="reproduction-max">Max Parents Allowed:</label>
+            <label for="reproduction-max"
+              >Vecinos máximos requeridos (B_max):</label
+            >
             <input
               id="reproduction-max"
               name="reproduction-max"
@@ -62,7 +88,7 @@
             />
           </div>
           <div>
-            <label for="percent-life-reset">Percent Life:</label>
+            <label for="percent-life-reset">Probabilidad de vida:</label>
             <input
               id="percent-life-reset"
               name="percent-life-reset"
@@ -123,7 +149,9 @@
         <button id="btnColors">Cambiar colores</button>
 
         <!-- Chart -->
-        <div id="chart"></div>
+        <div id="chart">
+          <div id="graph"></div>
+        </div>
       </div>
     </div>
   </body>

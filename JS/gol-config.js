@@ -5,30 +5,50 @@ let CURRENT_SIM = null;
 let preset = null;
 
 document.addEventListener("DOMContentLoaded", function () {
-  let roundDelay = 20;
-  let pixelSize = 4;
-  let rules = [2, 3, 3, 3];
+  const roundDelay = 20;
+  const pixelSize = 4;
+  const canvasSize = 800;
+  const rules = [2, 3, 3, 3];
 
-  resetSimulation(pixelSize, roundDelay, 0.5);
-  setupEventListeners(roundDelay);
+  resetSimulation(pixelSize, canvasSize, rules, roundDelay, 0.05);
+  setupEventListeners(canvasSize, pixelSize, rules, 0.0, roundDelay);
   loadPresets();
 });
 
-function resetSimulation(pixelSize, roundDelay, initialChanceOfLife = 0.05) {
-  let containerCanvas = document.getElementById("canvas");
-  let previousCanvas = containerCanvas.querySelector("canvas");
+function resetSimulation(
+  pixelSize,
+  canvasSize,
+  rules,
+  roundDelay,
+  initialChanceOfLife = 0.05
+) {
+  const containerCanvas = document.getElementById("canvas");
+  const previousCanvas = containerCanvas.querySelector("canvas");
+
+  const chart = document.querySelector("#chart");
+  const graph = document.querySelector("#graph");
 
   if (previousCanvas) containerCanvas.removeChild(previousCanvas);
 
+  if (graph) {
+    chart.removeChild(graph);
+    const graph2 = document.createElement("div");
+    graph2.setAttribute("id", "graph");
+    graph2.style.width = "100%";
+    graph2.style.height = "100%";
+    chart.appendChild(graph2);
+  }
+
   /**
-   * ! Con canvasSize = 2000 hace las generaciones cada segundo
+   * ! Con canvasSize = 1500 hace las generaciones cada segundo
    */
-  const canvasSize = 800;
-  let cols = canvasSize / pixelSize;
-  let rows = canvasSize / pixelSize;
+  //const canvasSize = 800;
+  const cols = canvasSize / pixelSize;
+  const rows = canvasSize / pixelSize;
 
   CURRENT_SIM = new GOL(rows, cols, pixelSize, roundDelay, initialChanceOfLife);
 
+  CURRENT_SIM.setRules(...rules);
   CURRENT_SIM.canvas.style.height = canvasSize + "px";
   CURRENT_SIM.canvas.style.width = canvasSize + "px";
   containerCanvas.append(CURRENT_SIM.canvas);
@@ -38,8 +58,22 @@ function resetSimulation(pixelSize, roundDelay, initialChanceOfLife = 0.05) {
   window.CURRENT_SIM = CURRENT_SIM;
 }
 
-function setupEventListeners(initialRoundDelay) {
-  let rulesForm = document.querySelector("#info-controls");
+function setupEventListeners(
+  initialCanvasSize,
+  initialCellSize,
+  initialRules,
+  initialChanceOfLife,
+  initialRoundDelay
+) {
+  const rulesForm = document.querySelector("#info-controls");
+
+  rulesForm.querySelector("#canvasSize").value = initialCanvasSize;
+  rulesForm.querySelector("#cellSize").value = initialCellSize;
+  rulesForm.querySelector("#underpopulation").value = initialRules[0];
+  rulesForm.querySelector("#overpopulation").value = initialRules[1];
+  rulesForm.querySelector("#reproduction-min").value = initialRules[2];
+  rulesForm.querySelector("#reproduction-max").value = initialRules[3];
+  rulesForm.querySelector("#percent-life-reset").value = initialChanceOfLife;
   rulesForm.querySelector("#frame-rate").value = initialRoundDelay;
 
   rulesForm.addEventListener("submit", (e) => {
@@ -99,8 +133,19 @@ function setupEventListeners(initialRoundDelay) {
   document
     .querySelector("#reset-life-button")
     .addEventListener("click", (e) => {
-      let chanceOfLife = 0.05;
-      CURRENT_SIM.resetLife("empty", chanceOfLife);
+      const canvasSize = rulesForm.querySelector("#canvasSize").value;
+      const cellSize = rulesForm.querySelector("#cellSize").value;
+      const rules = [];
+      rules.push(rulesForm.querySelector("#underpopulation").value);
+      rules.push(rulesForm.querySelector("#overpopulation").value);
+      rules.push(rulesForm.querySelector("#reproduction-min").value);
+      rules.push(rulesForm.querySelector("#reproduction-max").value);
+      const chanceOfLife = rulesForm.querySelector("#percent-life-reset").value;
+      const roundDelay = rulesForm.querySelector("#frame-rate").value;
+
+      resetSimulation(cellSize, canvasSize, rules, roundDelay, chanceOfLife);
+
+      //CURRENT_SIM.resetLife("empty", chanceOfLife);
     });
 
   document.querySelector("#frame-rate").addEventListener("change", (e) => {

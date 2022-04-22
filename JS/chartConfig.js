@@ -1,12 +1,12 @@
 export class Chart {
-  constructor() {
+  constructor(container, title) {
     this.dataset = anychart.data.set([]);
 
     // set chart type
     var chart = anychart.line();
 
     chart.title({
-      text: "Gráfica de densidades",
+      text: title,
       fontColor: "#333",
       fontSize: 20,
     });
@@ -18,10 +18,11 @@ export class Chart {
     chart.xAxis().staggerMode(false);
 
     // set container and draw chart
-    chart.container("chart").draw();
+    chart.container(container).draw();
   }
 
   updateChart(generations, population) {
+    console.log("desmadrando");
     this.dataset.append({
       x: generations,
       value: population,

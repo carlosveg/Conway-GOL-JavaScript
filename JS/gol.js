@@ -55,7 +55,7 @@ export default class GOL {
     this.registerMouseListeners();
 
     // Para la gráfica
-    this.chart = new Chart();
+    this.chart = new Chart("graph", "Gráfica de densidades");
   } // fin del constructor
 
   start() {
