@@ -10,149 +10,134 @@
     <script type="module" src="JS/gol-config.js"></script>
     <!-- Grafica -->
     <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
   </head>
   <body>
     <div id="container">
-      <div
-        id="canvas"
-        style="max-height: 800px; max-width: 800px; overflow: scroll"
-      ></div>
+      <main id="canvas"></main>
 
-      <div id="info-controls">
-        <div id="number-group">
-          <div>
-            <label for="canvasSize">Tamaño del canvas:</label>
-            <input
-              id="canvasSize"
-              name="canvasSize"
-              type="number"
-              min="400"
-              max="1500"
-            />
+      <section id="parameters-section">
+        <fieldset id="parameters-values">
+          <legend>Parámetros</legend>
+          <div id="inputs">
+            <div class="inputs">
+              <label for="canvasSize">Tamaño del canvas:</label>
+              <input
+                id="canvasSize"
+                name="canvasSize"
+                type="number"
+                min="400"
+                max="1500"
+              />
+            </div>
+            <div class="inputs">
+              <label for="cellSize">Tamaño de célula:</label>
+              <input
+                id="cellSize"
+                name="cellSize"
+                type="number"
+                min="0"
+                max="9"
+              />
+            </div>
+            <div class="inputs">
+              <label> Delay (ms): </label>
+              <input
+                id="frame-rate"
+                type="range"
+                value="20"
+                min="0"
+                max="50"
+                step="10"
+              />
+            </div>
+            <div>
+              <label> Presets: </label
+              ><select id="presets"></select>
+              <button id="load-preset-button">Cargar preset</button>
+            </div>
+            <div class="inputs">
+              <label for="percent-life-reset">Probabilidad de vida:</label>
+              <input
+                id="percent-life-reset"
+                name="percent-life-reset"
+                type="number"
+                value="0"
+                min="0"
+                max="1"
+                step="0.01"
+              />
+            </div>
           </div>
-          <div>
-            <label for="cellSize">Tamaño de célula:</label>
-            <input
-              id="cellSize"
-              name="cellSize"
-              type="number"
-              min="0"
-              max="9"
-            />
+          <div id="section-rules">
+            <div class="config">
+              <label for="S_min">Muerte por soledad (S_min):</label>
+              <input id="S_min" name="S_min" type="number" min="0" max="9" />
+            </div>
+            <div class="config">
+              <label for="S_max">Muerte por sobrepoblación (S_max):</label>
+              <input id="S_max" name="S_max" type="number" min="0" max="9" />
+            </div>
+            <div class="config">
+              <label for="B_min">Vecinos mínimos requeridos (B_min):</label>
+              <input id="B_min" name="B_min" type="number" min="0" max="9" />
+            </div>
+            <div class="config">
+              <label for="B_max">Vecinos máximos requeridos (B_max):</label>
+              <input id="B_max" name="B_max" type="number" min="0" max="9" />
+            </div>
           </div>
-          <div>
-            <label for="underpopulation">Muerte por soledad (S_min):</label>
-            <input
-              id="underpopulation"
-              name="underpopulation"
-              type="number"
-              min="0"
-              max="9"
-            />
-          </div>
-          <div>
-            <label for="overpopulation"
-              >Muerte por sobrepoblación (S_max):</label
-            >
-            <input
-              id="overpopulation"
-              name="overpopulation"
-              type="number"
-              min="0"
-              max="9"
-            />
-          </div>
-          <div>
-            <label for="reproduction-min"
-              >Vecinos mínimos requeridos (B_min):</label
-            >
-            <input
-              id="reproduction-min"
-              name="reproduction-min"
-              type="number"
-              min="0"
-              max="9"
-            />
-          </div>
-          <div>
-            <label for="reproduction-max"
-              >Vecinos máximos requeridos (B_max):</label
-            >
-            <input
-              id="reproduction-max"
-              name="reproduction-max"
-              type="number"
-              min="0"
-              max="9"
-            />
-          </div>
-          <div>
-            <label for="percent-life-reset">Probabilidad de vida:</label>
-            <input
-              id="percent-life-reset"
-              name="percent-life-reset"
-              type="number"
-              value="0"
-              min="0"
-              max="1"
-              step="0.001"
-            />
-          </div>
-        </div>
-        <label>
-          Generaciones:
-          <div id="generations"></div>
-        </label>
-        <label>
-          Células vivas:
-          <div id="population"></div>
-        </label>
-        <label>
-          X:
-          <div id="xPos"></div>
-        </label>
-        <label>
-          Y:
-          <div id="yPos"></div>
-        </label>
-        <div id="number-group">
-          <label>
-            Delay (ms):
-            <input
-              id="frame-rate"
-              type="range"
-              value="20"
-              min="0"
-              max="50"
-              step="10"
-          /></label>
-          <label>
-            Presets:
-            <select id="presets"></select
-          ></label>
-        </div>
-        <button id="update-rules-button">Update Rules</button>
-        <button id="load-preset-button">Cargar preset</button>
-        <button id="pause-play-button">Pause/Play</button>
-        <button id="reset-life-button">Reset game</button>
-        <button id="next-generation">Next Generation</button>
+        </fieldset>
 
-        <div>
-          <input type="color" id="deathStyle" name="head" value="#ffffff" />
-          <label for="deathStyle">Célula muerta</label>
-        </div>
-        <div>
-          <input type="color" id="lifeStyle" name="head" value="#000000" />
-          <label for="lifeStyle">Célula viva</label>
-        </div>
-        <button id="btnColors">Cambiar colores</button>
+        <fieldset>
+          <legend>Datos</legend>
+          <label class="labels">
+            Generaciones:
+            <div class="value" id="generations"></div>
+          </label>
+          <label class="labels">
+            Células vivas:
+            <div class="value" id="population"></div>
+          </label>
+          <!-- <label class="labels">
+            X:
+            <div class="value" id="xPos"></div>
+          </label>
+          <label class="labels">
+            Y:
+            <div class="value" id="yPos"></div>
+          </label> -->
+        </fieldset>
 
-        <!-- Chart -->
-        <div id="chart">
-          <div id="graph"></div>
-        </div>
-      </div>
+        <fieldset class="controls">
+          <legend>Controles</legend>
+          <button id="update-rules-button">Update Rules</button>
+
+          <button id="pause-play-button">Pause/Play</button>
+          <button id="reset-life-button">Reset game</button>
+          <button id="next-generation">Next Generation</button>
+
+          <div id="colors">
+            <div>
+              <label for="deathStyle">Célula muerta</label>
+              <input type="color" id="deathStyle" name="head" value="#ffffff" />
+            </div>
+            <div>
+              <label for="lifeStyle">Célula viva</label>
+              <input type="color" id="lifeStyle" name="head" value="#000000" />
+            </div>
+            <button id="btnColors">Cambiar colores</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Gráficas</legend>
+
+          <!-- Chart -->
+          <div id="chart">
+            <div id="graph"></div>
+          </div>
+        </fieldset>
+      </section>
     </div>
   </body>
 </html>

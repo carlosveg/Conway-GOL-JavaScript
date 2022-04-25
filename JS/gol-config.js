@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const rules = [2, 3, 3, 3];
 
   resetSimulation(pixelSize, canvasSize, rules, roundDelay, 0.05);
-  setupEventListeners(canvasSize, pixelSize, rules, 0.0, roundDelay);
+  setupEventListeners(canvasSize, pixelSize, rules, 0.05, roundDelay);
   loadPresets();
 });
 
@@ -26,25 +26,22 @@ function resetSimulation(
   const previousCanvas = containerCanvas.querySelector("canvas");
 
   const chart = document.querySelector("#chart");
-  const graph = document.querySelector("#graph");
+  const previousGraph = document.querySelector("#graph");
 
   if (previousCanvas) containerCanvas.removeChild(previousCanvas);
 
-  if (graph) {
-    chart.removeChild(graph);
-    const graph2 = document.createElement("div");
-    graph2.setAttribute("id", "graph");
-    graph2.style.width = "100%";
-    graph2.style.height = "100%";
-    chart.appendChild(graph2);
+  if (previousGraph) {
+    chart.removeChild(previousGraph);
+    const newGraph = document.createElement("div");
+    newGraph.setAttribute("id", "graph");
+    newGraph.style.width = "100%";
+    newGraph.style.height = "50%";
+    chart.appendChild(newGraph);
   }
 
-  /**
-   * ! Con canvasSize = 1500 hace las generaciones cada segundo
-   */
   //const canvasSize = 800;
-  const cols = canvasSize / pixelSize;
-  const rows = canvasSize / pixelSize;
+  const cols = parseInt(canvasSize / pixelSize);
+  const rows = parseInt(canvasSize / pixelSize);
 
   CURRENT_SIM = new GOL(rows, cols, pixelSize, roundDelay, initialChanceOfLife);
 
@@ -65,22 +62,18 @@ function setupEventListeners(
   initialChanceOfLife,
   initialRoundDelay
 ) {
-  const rulesForm = document.querySelector("#info-controls");
+  const rulesForm = document.querySelector("#parameters-section");
 
   rulesForm.querySelector("#canvasSize").value = initialCanvasSize;
   rulesForm.querySelector("#cellSize").value = initialCellSize;
-  rulesForm.querySelector("#underpopulation").value = initialRules[0];
-  rulesForm.querySelector("#overpopulation").value = initialRules[1];
-  rulesForm.querySelector("#reproduction-min").value = initialRules[2];
-  rulesForm.querySelector("#reproduction-max").value = initialRules[3];
+  rulesForm.querySelector("#S_min").value = initialRules[0];
+  rulesForm.querySelector("#S_max").value = initialRules[1];
+  rulesForm.querySelector("#B_min").value = initialRules[2];
+  rulesForm.querySelector("#B_max").value = initialRules[3];
   rulesForm.querySelector("#percent-life-reset").value = initialChanceOfLife;
   rulesForm.querySelector("#frame-rate").value = initialRoundDelay;
 
-  rulesForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-  });
-
-  let pause = () => {
+  const pause = () => {
     if (CURRENT_SIM.paused) {
       CURRENT_SIM.start();
     } else {
@@ -104,10 +97,10 @@ function setupEventListeners(
     .querySelector("#update-rules-button")
     .addEventListener("click", (e) => {
       let rules = [
-        parseInt(rulesForm.querySelector("#underpopulation").value, 10),
-        parseInt(rulesForm.querySelector("#overpopulation").value, 10),
-        parseInt(rulesForm.querySelector("#reproduction-min").value, 10),
-        parseInt(rulesForm.querySelector("#reproduction-max").value, 10),
+        parseInt(rulesForm.querySelector("#S_min").value, 10),
+        parseInt(rulesForm.querySelector("#S_max").value, 10),
+        parseInt(rulesForm.querySelector("#B_min").value, 10),
+        parseInt(rulesForm.querySelector("#B_max").value, 10),
       ];
 
       CURRENT_SIM.setRules(...rules);
@@ -136,16 +129,14 @@ function setupEventListeners(
       const canvasSize = rulesForm.querySelector("#canvasSize").value;
       const cellSize = rulesForm.querySelector("#cellSize").value;
       const rules = [];
-      rules.push(rulesForm.querySelector("#underpopulation").value);
-      rules.push(rulesForm.querySelector("#overpopulation").value);
-      rules.push(rulesForm.querySelector("#reproduction-min").value);
-      rules.push(rulesForm.querySelector("#reproduction-max").value);
+      rules.push(rulesForm.querySelector("#S_min").value);
+      rules.push(rulesForm.querySelector("#S_max").value);
+      rules.push(rulesForm.querySelector("#B_min").value);
+      rules.push(rulesForm.querySelector("#B_max").value);
       const chanceOfLife = rulesForm.querySelector("#percent-life-reset").value;
       const roundDelay = rulesForm.querySelector("#frame-rate").value;
 
       resetSimulation(cellSize, canvasSize, rules, roundDelay, chanceOfLife);
-
-      //CURRENT_SIM.resetLife("empty", chanceOfLife);
     });
 
   document.querySelector("#frame-rate").addEventListener("change", (e) => {

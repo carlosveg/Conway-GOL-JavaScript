@@ -14,12 +14,15 @@ export default class GOL {
     this.intervalId = 1;
     this.generations = 0;
     this.population = 0;
+    /**
+     * * Coordenadas de los vecinos respecto de cada célula
+     */
     this.adjacentCells = [
       [-1, -1],
       [0, -1],
       [1, -1],
       [-1, 0],
-      [0, 0],
+      //[0, 0],
       [1, 0],
       [-1, 1],
       [0, 1],
@@ -36,7 +39,7 @@ export default class GOL {
     }
 
     /**
-     * Le asignamos los vecinos a cada celda para optimizar los calculos
+     * * Le asignamos los vecinos a cada celda para optimizar los calculos
      */
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
@@ -56,6 +59,7 @@ export default class GOL {
 
     // Para la gráfica
     this.chart = new Chart("graph", "Gráfica de densidades");
+    this.chart2 = new Chart("graph", "Gráfica de densidades (log10)");
   } // fin del constructor
 
   start() {
@@ -66,7 +70,6 @@ export default class GOL {
     this.intervalId = setInterval(() => {
       this.advanceRound();
       this.repaint();
-      this.chart.updateChart(this.getGenerations(), this.getPopulation());
     }, this.interRoundDelay);
   }
 
@@ -124,18 +127,12 @@ export default class GOL {
     this.population = this.grid
       .flat()
       .filter((cell) => cell.alive === true).length;
+    /* Actualizamos las gráficas en cada ronda/generación */
+    this.chart.updateChart(this.generations, this.population);
+    this.chart2.updateChart(this.generations, Math.log10(this.population));
 
-    document.querySelector("#generations").innerHTML =
-      this.getGenerations() + "";
-    document.querySelector("#population").innerHTML = this.getPopulation() + "";
-  }
-
-  getGenerations() {
-    return this.generations;
-  }
-
-  getPopulation() {
-    return this.population;
+    document.querySelector("#generations").innerHTML = this.generations;
+    document.querySelector("#population").innerHTML = this.population;
   }
 
   repaint(force = false) {
@@ -168,13 +165,13 @@ export default class GOL {
       this.canvasCtx.fillStyle = color;
 
       for (let [row, col] of byColor[color]) {
-        /* this.canvasCtx.fillRect(
+        this.canvasCtx.fillRect(
           col * this.pixelSize,
           row * this.pixelSize,
           this.pixelSize,
           this.pixelSize
-        ); */
-        this.paintPixel(row, col);
+        );
+        //this.paintPixel(row, col);
       }
     }
   }
@@ -191,18 +188,14 @@ export default class GOL {
 
   /**
    * * Change the rules to each cell in grid
-   * @param {number} underPopulation
-   * @param {number} overPopulation
-   * @param {number} reproductionMin
-   * @param {number} reproductionMax
    */
-  setRules(underPopulation, overPopulation, reproductionMin, reproductionMax) {
+  setRules(S_min, S_max, B_min, B_max) {
     this.grid.forEach((row) => {
       row.forEach((cell) => {
-        cell.underPopulation = underPopulation;
-        cell.overPopulation = overPopulation;
-        cell.reproductionMin = reproductionMin;
-        cell.reproductionMax = reproductionMax;
+        cell.S_min = S_min;
+        cell.S_max = S_max;
+        cell.B_min = B_min;
+        cell.B_max = B_max;
       });
     });
   }
@@ -263,8 +256,8 @@ export default class GOL {
         this.paintPixel(y, x);
       }
 
-      document.querySelector("#xPos").innerHTML = e.offsetX + "";
-      document.querySelector("#yPos").innerHTML = e.offsetY + "";
+      /* document.querySelector("#xPos").innerHTML = e.offsetX + "";
+      document.querySelector("#yPos").innerHTML = e.offsetY + ""; */
     });
 
     bindMultipleEventListener(this.canvas, ["mousedown", "touchstart"], (e) => {

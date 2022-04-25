@@ -22,7 +22,6 @@ export class Chart {
   }
 
   updateChart(generations, population) {
-    console.log("desmadrando");
     this.dataset.append({
       x: generations,
       value: population,

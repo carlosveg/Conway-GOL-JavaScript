@@ -3,15 +3,19 @@ export default class Cell {
     this.alive = alive;
     this.lifeColor = "#000000";
     this.deathColor = "#ffffff";
-    this.underPopulation = 2;
-    this.overPopulation = 3;
-    this.reproductionMin = 3;
-    this.reproductionMax = 3;
+    this.S_min = 2;
+    this.S_max = 3;
+    this.B_min = 3;
+    this.B_max = 3;
 
     this.neighbors = [];
     this.nextState = null;
     this.previousState = null;
     this.forceRepaint = true;
+
+    if (this.B_max < this.B_min) {
+      this.B_min = this.B_max;
+    }
   } // fin del constructor
 
   prepareUpdate() {
@@ -24,16 +28,9 @@ export default class Cell {
     }
 
     /* Reglas */
-    if (
-      nextState &&
-      (sum < this.underPopulation || sum > this.overPopulation)
-    ) {
+    if (nextState && (sum < this.S_min || sum > this.S_max)) {
       nextState = false;
-    } else if (
-      !nextState &&
-      sum >= this.reproductionMin &&
-      sum <= this.reproductionMax
-    ) {
+    } else if (!nextState && sum >= this.B_min && sum <= this.B_max) {
       nextState = true;
     }
 

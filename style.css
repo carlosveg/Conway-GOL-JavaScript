@@ -6,6 +6,16 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: #eee;
+}
+
+main {
+  max-height: 900px;
+  max-width: 900px;
+  overflow: scroll;
+}
+
 #sim-parameters {
   display: grid;
   justify-self: center;
@@ -15,6 +25,60 @@
   margin: auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+#parameters-values {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+fieldset {
+  padding: 0.2rem 1rem;
+  /* margin-right: 1rem; */
+}
+
+.config {
+  display: grid;
+  grid-template-columns: 70% 20% 10%;
+  margin: 5px 0;
+}
+
+input[type="number"],
+select {
+  padding: 0.2rem;
+  border-radius: 5px;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: 40% 30% 10%;
+  margin: 5px 0;
+}
+
+.labels {
+  display: flex;
+}
+
+.value {
+  margin-left: 10px;
+}
+
+.controls {
+  display: flex;
+}
+
+#colors {
+  display: flex;
+  align-items: center;
+}
+
+#colors > div {
+  margin: 0 0.5rem;
+}
+
+hr {
+  margin: 0.5rem 0;
 }
 
 canvas {
@@ -26,20 +90,21 @@ canvas {
 }
 
 button {
-  font-weight: bold;
   border: 3px solid #888888;
-  margin-bottom: 2px;
-  font-weight: normal;
-  text-align: center;
+  font-weight: bold;
+  margin: 0.2rem;
   cursor: pointer;
-  border-radius: 4px;
-  background: #eeeeee;
+  border-radius: 5px;
+  background: #eee;
   color: #000000;
+  padding: 0.5rem;
+  transition: 0.1s all ease-in-out;
 }
 
-#number-group > div {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+button:hover {
+  background: #000;
+  color: #eee;
+  transition: 0.1s all ease-in-out;
 }
 
 #chart {
