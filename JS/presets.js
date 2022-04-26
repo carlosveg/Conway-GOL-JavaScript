@@ -1,5 +1,131 @@
 export const presets = {
   empty: [],
+  /**
+   * Distance 10
+   * Offset Left 2
+   */
+  "glider-collision-0": [
+    /* Glider 1 */
+    [0, -1],
+    [1, 0],
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    /* Glider 2 */
+    [4, 4],
+    [5, 4],
+    [6, 4],
+    [4, 5],
+    [5, 6],
+  ],
+  /**
+   * Distance 10
+   * Offset Left 1
+   */
+  "glider-collision-OffsetLeft1": [
+    /* Glider 1 */
+    [0, -1],
+    [1, 0],
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    /* Glider 2 */
+    [3, 5],
+    [4, 5],
+    [5, 5],
+    [3, 6],
+    [4, 7],
+  ],
+  /**
+   * Distance 10
+   * Offset Left 2
+   */
+  "glider-collision-OffsetLeft2": [
+    /* Glider 1 */
+    [0, -1],
+    [1, 0],
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    /* Glider 2 */
+    [2, 6],
+    [3, 6],
+    [4, 6],
+    [2, 7],
+    [3, 8],
+  ],
+  /**
+   * Distance 10
+   * Offset Left 3
+   */
+  "glider-collision-OffsetLeft3": [
+    /* Glider 1 */
+    [0, -1],
+    [1, 0],
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    /* Glider 2 */
+    [1, 7],
+    [2, 7],
+    [3, 7],
+    [1, 8],
+    [2, 9],
+  ],
+  /**
+   * Distance 10
+   * Offset Right 1
+   */
+  "glider-collision-OffsetRight1": [
+    /* Glider 1 */
+    [0, -1],
+    [1, 0],
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    /* Glider 2 */
+    [5, 3],
+    [6, 3],
+    [7, 3],
+    [5, 4],
+    [6, 5],
+  ],
+  /**
+   * Distance 10
+   * Offset Right 1
+   */
+  "glider-collision-OffsetRight2": [
+    /* Glider 1 */
+    [0, -1],
+    [1, 0],
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    /* Glider 2 */
+    [6, 2],
+    [7, 2],
+    [8, 2],
+    [6, 3],
+    [7, 4],
+  ],
+  /**
+   * Distance 10
+   * Offset Right 1
+   */
+  "glider-collision-OffsetRight3": [
+    /* Glider 1 */
+    [0, -1],
+    [1, 0],
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    /* Glider 2 */
+    [7, 1],
+    [8, 1],
+    [9, 1],
+    [7, 2],
+    [8, 3],
+  ],
   block: [
     [0, 0],
     [1, 0],
